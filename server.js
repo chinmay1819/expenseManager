@@ -11,14 +11,10 @@ mongoose.connect("mongodb+srv://chinmay1819:c9403000981@cluster0.8j3na.mongodb.n
 // creating a data schema
 const expenseSchema= {
     reason : String,
-    amount : String
+    amount : Number
 }
 
 const e = mongoose.model("Expense",expenseSchema);
-
-
-
-
 
 
 app.get("/",function(req,res){
@@ -35,6 +31,18 @@ app.post("/",function(req,res){
     res.redirect("/");
 })
 
+// for showing all expenses 
+app.get("/allExpenditure",async(req,res)=>{
+    let data=await e.find();
+    res.send(data);
+})
+
+
+app.get("/getPurchase:id",async(req,res)=>{
+    let data=await e.find({reason:"id"});
+    res.send(data);
+
+})
 
 app.listen(3000,function(){
     console.log("Server is Running fine !");
